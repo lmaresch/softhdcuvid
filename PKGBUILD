@@ -19,7 +19,7 @@ source=("vdr-plugin-${_plugname}::git+https://github.com/jojo61/vdr-plugin-softh
         "vdr-plugin-softhdcuvid-fix-DrawPixel-error.patch"
         "vdr-plugin-softhdcuvid-fix-__checkCudaErrors.patch"
         "vdr-plugin-softhdcuvid-fix-compilerwarnings.patch"
-        "vdr-plugin-softhdcuvid-fix-deprecated-ffmpeg-funcs.diff")
+        "vdr-plugin-softhdcuvid-fix-deprecated-ffmpeg-funcs.patch")
 backup=("etc/vdr/conf.avail/50-$_plugname.conf")
 sha512sums=('SKIP'
          '0b336e5d0c18e5a875389c52d498ce81db0a407c6a93e1e72e0d0faec41d2165b80e91e9787465bb2cb9923ca65e6ce50e4a086f0d26410059899fef2bbe87b0'
@@ -60,7 +60,7 @@ prepare() {
   # Fix compiler warnings about deprecated ffmpeg functions
   # - avcodec_decode_audio4: https://github.com/pesintta/vdr-plugin-vaapidevice/issues/32
   # - av_free_packet: https://lists.ffmpeg.org/pipermail/ffmpeg-cvslog/2015-October/094920.html
-  patch -Np1 -i "${srcdir}/vdr-plugin-softhdcuvid-fix-deprecated-ffmpeg-funcs.diff"
+  patch -Np1 -i "${srcdir}/vdr-plugin-softhdcuvid-fix-deprecated-ffmpeg-funcs.patch"
 }
 
 build() {
