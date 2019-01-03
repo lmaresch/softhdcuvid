@@ -1,0 +1,48 @@
+diff --git a/drvapi_error_string.h b/drvapi_error_string.h
+index 18bfb1c..3c07b4f 100644
+--- a/drvapi_error_string.h
++++ b/drvapi_error_string.h
+@@ -441,7 +441,7 @@ s_CudaErrorStr sCudaDrvErrorString[] =
+ 
+ // This is just a linear search through the array, since the error_id's are not
+ // always ocurring consecutively
+-inline const char *getCudaDrvErrorString(CUresult error_id)
++static inline const char *getCudaDrvErrorString(CUresult error_id)
+ {
+     int index = 0;
+ 
+diff --git a/openglosd.cpp b/openglosd.cpp
+index 27fc36c..3b966cc 100644
+--- a/openglosd.cpp
++++ b/openglosd.cpp
+@@ -1444,7 +1444,7 @@ int cOglThread::StoreImage(const cImage &image) {
+ 
+     tColor *argb = MALLOC(tColor, imgSize);
+     if (!argb) {
+-        esyslog("[softhddev]memory allocation of %d kb for OSD image failed", imgSize  * sizeof(tColor) / 1024);
++        esyslog("[softhddev]memory allocation of %ld kb for OSD image failed", (imgSize  * sizeof(tColor)) / 1024);
+         ClearSlot(slot);
+         slot = 0;
+         return 0;
+diff --git a/video.c b/video.c
+index 16c0762..d7d647c 100644
+--- a/video.c
++++ b/video.c
+@@ -1795,7 +1795,7 @@ int CuvidMessage(int level, const char *format, ...)
+ #define checkCudaErrors(err)  __checkCudaErrors (err, __FILE__, __LINE__)
+ 
+ // These are the inline versions for all of the SDK helper functions
+-inline void __checkCudaErrors(CUresult err, const char *file, const int line)
++static inline void __checkCudaErrors(CUresult err, const char *file, const int line)
+ {
+     if (CUDA_SUCCESS != err)
+     {
+@@ -2180,7 +2180,7 @@ void SDK_CHECK_ERROR_GL() {
+     GLenum gl_error = glGetError();
+ 
+     if (gl_error != GL_NO_ERROR) {
+-       Fatal(_("video/cuvid: SDL error %d: %d\n"),gl_error);
++       Fatal(_("video/cuvid: SDL error %d\n"),gl_error);
+     }
+ }
+ 
