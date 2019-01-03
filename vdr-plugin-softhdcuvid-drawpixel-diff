@@ -1,0 +1,17 @@
+diff --git a/openglosd.cpp b/openglosd.cpp
+index 27fc36c..c8cdb17 100644
+--- a/openglosd.cpp
++++ b/openglosd.cpp
+@@ -1785,7 +1785,11 @@ void cOglPixmap::DrawImage(const cPoint &Point, int ImageHandle) {
+ }
+ 
+ void cOglPixmap::DrawPixel(const cPoint &Point, tColor Color) {
+-    esyslog("[softhddev] DrawPixel %d %d color %x not implemented in OpenGl OSD", Point.X(), Point.X(), Color);
++    cRect r(Point.X(), Point.Y(), 1, 1);
++    oglThread->DoCmd(new cOglCmdDrawRectangle(fb, r.X(), r.Y(), r.Width(), r.Height(), Color));
++
++    SetDirty();
++    MarkDrawPortDirty(r);
+ }
+ 
+ void cOglPixmap::DrawBitmap(const cPoint &Point, const cBitmap &Bitmap, tColor ColorFg, tColor ColorBg, bool Overlay) {

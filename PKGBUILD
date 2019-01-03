@@ -5,7 +5,7 @@ pkgname=vdr-softhdcuvid
 pkgver=1.1.0_4_g24f679e
 _gitver=24f679e1d3f0eda895bb3fecbcd75ec2e3aeb869
 _vdrapi=2.4.0
-pkgrel=1
+pkgrel=2
 pkgdesc="software and GPU emulated HD output device plugin for VDR"
 url="http://projects.vdr-developer.org/projects/plg-softhddevice"
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
@@ -15,10 +15,12 @@ optdepends=('vdr-xorg: Recommended way to start X.org server together with VDR')
 makedepends=('git' 'glm' 'glu' 'patchutils')
 _plugname=${pkgname//vdr-/}
 source=("vdr-plugin-${_plugname}::git+https://github.com/jojo61/vdr-plugin-softhdcuvid#commit=$_gitver"
-        "50-$_plugname.conf")
+        "50-$_plugname.conf"
+        "vdr-plugin-softhdcuvid-drawpixel-diff")
 backup=("etc/vdr/conf.avail/50-$_plugname.conf")
 sha512sums=('SKIP'
-         '0b336e5d0c18e5a875389c52d498ce81db0a407c6a93e1e72e0d0faec41d2165b80e91e9787465bb2cb9923ca65e6ce50e4a086f0d26410059899fef2bbe87b0')
+         '0b336e5d0c18e5a875389c52d498ce81db0a407c6a93e1e72e0d0faec41d2165b80e91e9787465bb2cb9923ca65e6ce50e4a086f0d26410059899fef2bbe87b0'
+         'fe0f5ddc0d8086a350ea3c02083253578a6de4e88a616059c86be6dd42510c795a50f060e9c29dcfb6208ebedd41e38257afb9857049dd3fbc01b70bc6c684cb')
 
 pkgver() {
   cd "${srcdir}/vdr-plugin-${_plugname}"
@@ -37,6 +39,9 @@ prepare() {
   # Adapt path to cuda headers, in arch they are installed in /opt/cuda/include
   sed -i 's%/usr/local/cuda/include%/opt/cuda/include%' Makefile
   sed -i 's%-L/usr/local/cuda/targets/x86_64-linux/lib%-L/opt/cuda/lib64%' Makefile
+
+  # Fix DrawPixel log errors with some skins
+  patch -Np1 -i "${srcdir}/vdr-plugin-softhdcuvid-drawpixel-diff"
 }
 
 build() {
