@@ -1,6 +1,4 @@
-# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
-
-# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+# This PKGBUILD could be part of the VDR4Arch project [https://github.com/vdr4arch]
 pkgname=vdr-softhdcuvid
 pkgver=1.1.0_4_g24f679e
 _gitver=24f679e1d3f0eda895bb3fecbcd75ec2e3aeb869
@@ -8,7 +6,7 @@ _vdrapi=2.4.0
 pkgrel=4
 pkgdesc="software and GPU emulated HD output device plugin for VDR"
 url="http://projects.vdr-developer.org/projects/plg-softhddevice"
-arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+arch=('x86_64')
 license=('AGPL3')
 depends=('ffmpeg' 'freeglut' 'glew' 'mesa' "vdr-api=${_vdrapi}" 'xcb-util-wm' 'xorg-server' 'cuda' 'nvidia>=410.48' 'libplacebo>=1.7.0')
 optdepends=('vdr-xorg: Recommended way to start X.org server together with VDR')
